@@ -1,0 +1,9 @@
+#pragma once
+#include "analyse/analyse.hpp"
+#include "data/data.hpp"
+#include "disk/disk.hpp"
+#include "other/tuple.hpp"
+#include "type/chars.hpp"
+#include "type/double.hpp"
+#include "type/int.hpp"
+#include "type/type.hpp"
