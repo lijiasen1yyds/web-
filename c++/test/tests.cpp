@@ -30,6 +30,7 @@ void tuple_test() {
   std::cout << t << std::endl;
   std::cout << "TupleTest Success!\n";
 }
+
 void disk_test() {
   std::cout << "DiskTest Begin:\n";
   std::string path = "test.txt";
@@ -61,6 +62,8 @@ void disk_test() {
   system("rm -rf ./test.txt");
   std::cout << "DiskTest Success!\n";
 }
+
+void bench_test() {}
 
 int main() {
   tuple_test();

@@ -19,7 +19,7 @@ class Disk {
   std::fstream fs_;
 
 public:
-  Disk();
+  Disk() = default;
   Disk(std::string path) : fs_(path, std::ios_base::in | std::ios_base::out) {
     if (!fs_) {
       std::fstream(path, std::ios_base::out);
@@ -52,6 +52,11 @@ public:
       fs_.close();
     }
     fs_.open(path, std::ios_base::in | std::ios_base::out);
+    // 如果文件不存在那么先创建
+    if (!fs_) {
+      std::fstream(path, std::ios_base::out);
+      fs_.open(path, std::ios_base::in | std::ios_base::out);
+    }
   }
 
   void write_file(boost::unordered::unordered_flat_map<

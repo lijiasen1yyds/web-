@@ -17,16 +17,20 @@ class Data {
   Disk disk_;
 
 public:
-  Data() : disk_() {
+  Data() {
     std::string path = "data.dat";
     disk_.open_file(path);
     disk_.read_data(data_);
   }
+
+  ~Data() { disk_.write_file(data_); }
 
   boost::unordered::unordered_flat_map<uint,
                                        Tuple<Chars, Int, Int, Double, Double>> &
   get_data() {
     return data_;
   }
+
+  void save() { disk_.write_file(data_); }
 };
 } // namespace whms
