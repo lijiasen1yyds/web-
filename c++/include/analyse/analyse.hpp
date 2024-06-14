@@ -6,9 +6,10 @@ namespace whms {
 enum class Info { Name, Id, Amount, OpenPrice, SellPrice };
 class Analyser {
   Data data_;
+  uint i;
 
 public:
-  Analyser() : data_() {}
+  Analyser() : data_() { i = data_.get_data().size(); }
   ~Analyser() = default;
 
   // 显示所有商品信息
@@ -27,15 +28,19 @@ public:
     auto &elem = data_.get_data()[index];
     std::cout << "输入你要执行的操作：\n1.入仓\n2.出仓\n3.更新信息\n";
     std::cin >> index; // 废物利用
-    int num;
+    int num, num2;
     switch (index) {
     case 1:
+      std::cout << "输入入仓数量：";
+      std::cin >> num2;
       elem.read(2, num);
-      elem.write(2, num + 1);
+      elem.write(2, num + num2);
       break;
     case 2:
+      std::cout << "输入出仓数量：";
+      std::cin >> num2;
       elem.read(2, num);
-      elem.write(2, num - 1);
+      elem.write(2, num - num2);
       break;
     case 3: {
       Chars name;
@@ -72,7 +77,7 @@ public:
     std::cin >> name >> id >> amount >> opening_price >> sell_price;
     Tuple<Chars, Int, Int, Double, Double> t{name, id, amount, opening_price,
                                              sell_price};
-    data_.get_data().try_emplace(data_.get_data().size(), t);
+    data_.get_data().emplace(i, t);
     std::cout << "货物已添加\n";
     std::cout << "返回上一级..\n";
   }

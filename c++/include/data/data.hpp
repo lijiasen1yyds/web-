@@ -23,7 +23,7 @@ public:
     disk_.read_data(data_);
   }
 
-  ~Data() { disk_.write_file(data_); }
+  ~Data() {}
 
   boost::unordered::unordered_flat_map<uint,
                                        Tuple<Chars, Int, Int, Double, Double>> &

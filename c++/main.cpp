@@ -34,8 +34,6 @@ void start() {
 }
 
 int main(int argc, char **argv) {
-  // while (true) {
-  // }
   print_ui();
   start();
   std::cout << "bye~\n";

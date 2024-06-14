@@ -13,10 +13,11 @@
 #include <iostream>
 #include <stdexcept>
 #include <string>
-#include <system_error>
 namespace whms {
 class Disk {
+  std::filesystem::path path_;
   std::fstream fs_;
+  uint i = 0;
 
 public:
   Disk() = default;
@@ -34,7 +35,6 @@ public:
       throw std::runtime_error(
           "The data file path is empty, pls open a data file\n");
     }
-    uint i = 0;
     fs_.seekg(0);
     Chars name;
     Int id, amount;
@@ -43,11 +43,14 @@ public:
       fs_ >> name >> id >> amount >> opening_price >> sell_price;
       Tuple<Chars, Int, Int, Double, Double> t{name, id, amount, opening_price,
                                                sell_price};
-      data.try_emplace(i++, t);
+      data.emplace(i++, t);
     }
+    // 会读到最后一行，但是最后一行
+    i--;
+    data.erase(i);
   }
 
-  void open_file(std::string &path) {
+  void open_file(const std::string &path) {
     if (fs_.is_open()) {
       fs_.close();
     }
@@ -57,10 +60,14 @@ public:
       std::fstream(path, std::ios_base::out);
       fs_.open(path, std::ios_base::in | std::ios_base::out);
     }
+    path_ = path;
   }
 
   void write_file(boost::unordered::unordered_flat_map<
                   uint, Tuple<Chars, Int, Int, Double, Double>> &data) {
+    if (!fs_) {
+      open_file(path_.native());
+    }
     if (fs_.is_open()) {
       fs_.seekg(0);
       for (auto &v : data) {
