@@ -7,7 +7,6 @@
 
 使用工具：
 ```
-boost.asio库（用于进程通信）
 boost.unordered_flat_map库（用来存储数据）
 xmake 2.8.7+20240401（构建）
 gcc 13.2.0（编译）
